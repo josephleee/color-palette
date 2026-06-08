@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>컬러 팔레트 생성기 - 색상 조합 도구</title>
-<meta name="description" content="전문가용 컬러 팔레트 생성기 및 색상 선택 도구. HSL/HEX/RGB 색상 선택, 조화 규칙 생성, 대비 검사, 팔레트 저장 및 내보내기 기능을 제공합니다.">
-<meta name="keywords" content="컬러 팔레트,색상 선택기,색상 조합,색상 조화,대비 검사,WCAG">
+<title>Color Palette Generator — Vercel</title>
+<meta name="description" content="Professional color palette generator and color picker. HSL/HEX/RGB color selection, harmony rules, contrast checker, palette save and export.">
+<meta name="keywords" content="color palette, color picker, color harmony, color scheme, WCAG contrast, design tool">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,613 +13,802 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8896961198330137" crossorigin="anonymous"></script>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DSGL4BJH4R"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DSGL4BJH4R');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DSGL4BJH4R');</script>
 <style>
+/* ─── Vercel Dark Theme Tokens ─────────────────────────────────── */
 :root {
-  --navy: #0d253d;
-  --navy-light: #1a3a5c;
-  --indigo: #533afd;
-  --indigo-light: #6b55fd;
-  --white: #ffffff;
-  --gray-50: #f8f9fc;
-  --gray-100: #eef0f6;
-  --gray-200: #d5d9e6;
-  --gray-300: #b0b8cc;
-  --gray-400: #8892a8;
-  --gray-500: #6b7385;
-  --gray-600: #4a5263;
-  --gray-700: #2d3545;
-  --gray-800: #1a2230;
-  --red: #ef4444;
-  --green: #22c55e;
-  --orange: #f59e0b;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; }
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 300;
-  background: var(--navy);
-  color: var(--gray-100);
-  line-height: 1.6;
-  min-height: 100vh;
-}
-h1, h2, h3, h4, h5, h6 { font-weight: 500; line-height: 1.3; }
-a { color: var(--indigo); text-decoration: none; }
-a:hover { color: var(--indigo-light); text-decoration: underline; }
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --surface-hover: #111111;
 
-/* ===== Header ===== */
-.site-header {
-  background: rgba(13,37,61,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(83,58,253,0.15);
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-}
-.header-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1rem; height: 60px;
-}
-.logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); font-weight: 600; font-size: 1.1rem; }
-.logo svg { width: 24px; height: 24px; color: var(--indigo); }
-.nav-links { display: flex; gap: 1.5rem; align-items: center; }
-.nav-links a { color: var(--gray-300); font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--white); text-decoration: none; }
-.hamburger { display: none; background: none; border: none; color: var(--white); cursor: pointer; padding: 4px; }
+  --fg: #ffffff;
+  --fg-2: #a1a1aa;
+  --muted: #71717a;
+  --meta: #52525b;
 
-/* ===== AdSense Placeholders ===== */
-.ad-container { display: flex; justify-content: center; align-items: center; overflow: hidden; }
-.ad-header { width: 728px; max-width: 100%; height: 90px; margin: 0 auto; }
-.ad-sidebar { width: 300px; max-width: 100%; height: 250px; }
-.ad-label { font-size: 0.65rem; color: var(--gray-400); text-align: center; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  --border: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.04);
 
-/* ===== Hero Section ===== */
-.hero {
-  padding: 120px 1rem 60px;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(83,58,253,0.12), transparent),
-              radial-gradient(ellipse 60% 50% at 20% 60%, rgba(83,58,253,0.08), transparent),
-              radial-gradient(ellipse 60% 50% at 80% 60%, rgba(83,58,253,0.08), transparent),
-              var(--navy);
-  text-align: center;
-}
-.hero h1 { font-size: 2.75rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
-.hero p { font-size: 1.125rem; color: var(--gray-300); max-width: 600px; margin: 0 auto 2rem; font-weight: 300; }
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--indigo); color: var(--white); border: none;
-  padding: 0.875rem 2rem; border-radius: 9999px; font-size: 0.95rem;
-  font-weight: 500; cursor: pointer; transition: all 0.2s;
-}
-.hero-cta:hover { background: var(--indigo-light); transform: translateY(-1px); }
+  --accent: #0070f3;
+  --accent-on: #ffffff;
+  --accent-hover: #005cd4;
 
-/* ===== Main Content ===== */
-.main-content { max-width: 1200px; margin: 0 auto; padding: 0 1rem 4rem; }
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warn: #eab308;
 
-/* ===== Grid Layout ===== */
-.content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; margin-top: 2rem; }
-.content-main { min-width: 0; }
-.content-sidebar { position: sticky; top: 80px; align-self: start; }
+  --font-display: "Geist", "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-body: "Geist", "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
 
-/* ===== Cards ===== */
-.card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.card-title {
-  font-size: 1.1rem; font-weight: 500; color: var(--white);
-  margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
-}
-.card-title svg { width: 20px; height: 20px; color: var(--indigo); flex-shrink: 0; }
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 40px;
+  --text-4xl: 48px;
 
-/* ===== Color Picker Row ===== */
-.color-picker-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 0;
-}
-.color-preview-area {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 250px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.1);
-  position: relative;
-  transition: background 0.15s;
-}
-.color-preview-text {
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  text-align: center;
-}
-.color-preview-text .hex-display { font-size: 1.5rem; font-weight: 600; color: white; font-family: 'SF Mono', monospace; }
-.color-preview-text .rgb-display, .color-preview-text .hsl-display { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  --leading-body: 1.5;
+  --leading-tight: 1.1;
+  --tracking-display: -0.025em;
 
-/* ===== Color Inputs ===== */
-.color-controls { display: flex; flex-direction: column; gap: 1rem; }
-.color-control-group { }
-.color-control-group label { display: block; font-size: 0.8rem; color: var(--gray-400); margin-bottom: 4px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.5px; }
-.color-control-group input[type="range"] { width: 100%; height: 6px; -webkit-appearance: none; background: var(--gray-700); border-radius: 3px; outline: none; }
-.color-control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--indigo); cursor: pointer; border: 2px solid var(--white); }
-.color-input-row { display: flex; gap: 0.5rem; align-items: center; }
-.color-input-row input[type="text"] {
-  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px; padding: 0.5rem 0.75rem; color: var(--white); font-family: 'SF Mono', monospace;
-  font-size: 0.85rem; outline: none; transition: border-color 0.2s;
-}
-.color-input-row input[type="text"]:focus { border-color: var(--indigo); }
-.color-input-row input[type="color"] { width: 40px; height: 40px; border: none; border-radius: 8px; cursor: pointer; padding: 0; background: none; }
-.copy-btn {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  background: transparent; border: 1px solid rgba(255,255,255,0.15);
-  color: var(--gray-300); border-radius: 9999px; padding: 0.4rem 0.75rem;
-  font-size: 0.75rem; cursor: pointer; transition: all 0.2s; font-family: inherit;
-}
-.copy-btn:hover { border-color: var(--indigo); color: var(--white); }
-.copy-btn svg { width: 14px; height: 14px; }
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
 
-/* ===== Palette Generator ===== */
-.palette-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.palette-btn {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--gray-200); border-radius: 9999px; padding: 0.5rem 1rem;
-  font-size: 0.8rem; cursor: pointer; transition: all 0.2s; font-family: inherit; font-weight: 400;
-}
-.palette-btn:hover { background: rgba(83,58,253,0.2); border-color: var(--indigo); color: var(--white); }
-.palette-btn.active { background: var(--indigo); border-color: var(--indigo); color: var(--white); }
-.palette-btn svg { width: 16px; height: 16px; }
-.palette-swatches {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.75rem;
-}
-.swatch-card {
-  border-radius: 12px; overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  cursor: pointer; transition: transform 0.2s;
-}
-.swatch-card:hover { transform: translateY(-2px); }
-.swatch-color { width: 100%; aspect-ratio: 1; display: block; }
-.swatch-info { padding: 0.5rem; background: rgba(13,37,61,0.95); text-align: center; }
-.swatch-info .swatch-hex { font-size: 0.75rem; font-family: 'SF Mono', monospace; color: var(--gray-200); font-weight: 400; }
-.swatch-info .swatch-name { font-size: 0.65rem; color: var(--gray-400); margin-top: 2px; }
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
 
-/* ===== Contrast Checker ===== */
-.contrast-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-.contrast-color-input { }
-.contrast-color-input label { font-size: 0.8rem; color: var(--gray-400); margin-bottom: 4px; display: block; }
-.contrast-color-input input[type="color"] { width: 100%; height: 48px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; background: none; padding: 2px; }
-.contrast-result {
-  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
-  padding: 1rem; background: rgba(255,255,255,0.04); border-radius: 12px;
-}
-.contrast-ratio { font-size: 1.5rem; font-weight: 600; color: var(--white); }
-.contrast-badge {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  padding: 0.35rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500;
-}
-.contrast-badge.pass-aaa { background: rgba(34,197,94,0.2); color: var(--green); }
-.contrast-badge.pass-aa { background: rgba(34,197,94,0.15); color: var(--green); }
-.contrast-badge.fail { background: rgba(239,68,68,0.2); color: var(--red); }
+  --elev-ring: 0 0 0 1px var(--border);
+  --elev-raised: 0 0 0 1px rgba(255,255,255,0.08), 0 2px 2px rgba(0,0,0,0.4), 0 8px 8px -8px rgba(0,0,0,0.6), 0 0 0 1px #1a1a1a;
 
-/* ===== Saved Palettes ===== */
-.saved-palettes { display: flex; flex-direction: column; gap: 0.75rem; }
-.saved-palette {
-  display: flex; align-items: center; gap: 0.75rem;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; padding: 0.75rem;
-}
-.saved-palette-colors { display: flex; gap: 3px; }
-.saved-palette-colors span { width: 28px; height: 28px; border-radius: 6px; display: block; }
-.saved-palette-info { flex: 1; min-width: 0; }
-.saved-palette-info .palette-name { font-size: 0.8rem; color: var(--gray-200); font-weight: 400; }
-.saved-palette-info .palette-date { font-size: 0.7rem; color: var(--gray-400); }
-.saved-palette-actions { display: flex; gap: 4px; }
-.saved-palette-actions button {
-  background: none; border: none; cursor: pointer; color: var(--gray-400); padding: 4px;
-  border-radius: 6px; transition: all 0.2s; display: flex;
-}
-.saved-palette-actions button:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+  --focus-ring: 0 0 0 2px var(--accent);
 
-/* ===== Export Buttons ===== */
-.export-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
-.btn-export {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--gray-200); border-radius: 9999px; padding: 0.5rem 1rem;
-  font-size: 0.8rem; cursor: pointer; transition: all 0.2s; font-family: inherit;
-}
-.btn-export:hover { border-color: var(--indigo); color: var(--white); }
-.btn-export svg { width: 16px; height: 16px; }
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 
-/* ===== Harmony Rules ===== */
-.harmony-rules {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0.75rem;
-}
-.harmony-rule {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 1rem;
-}
-.harmony-rule h4 { font-size: 0.9rem; color: var(--white); margin-bottom: 4px; font-weight: 500; }
-.harmony-rule p { font-size: 0.8rem; color: var(--gray-400); }
-
-/* ===== Footer ===== */
-.site-footer {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 3rem 1rem 2rem;
-  margin-top: 4rem;
-}
-.footer-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 2rem;
-}
-.footer-brand { }
-.footer-brand p { font-size: 0.85rem; color: var(--gray-400); max-width: 300px; margin-top: 0.5rem; }
-.footer-col h4 { font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 500; }
-.footer-col a { display: block; font-size: 0.85rem; color: var(--gray-300); margin-bottom: 0.4rem; font-weight: 300; }
-.footer-col a:hover { color: var(--white); }
-.footer-bottom {
-  max-width: 1200px; margin: 2rem auto 0;
-  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06);
-  text-align: center; font-size: 0.8rem; color: var(--gray-400);
+  --container-max: 1200px;
 }
 
-/* ===== Toast ===== */
-.toast {
-  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  background: rgba(83,58,253,0.9); backdrop-filter: blur(12px);
-  color: white; padding: 0.75rem 1.5rem; border-radius: 9999px;
-  font-size: 0.85rem; font-weight: 400; z-index: 999;
-  opacity: 0; transition: opacity 0.3s, transform 0.3s;
-  pointer-events: none;
-}
-.toast.show { opacity: 1; }
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(83,58,253,0.15); padding: 1rem; gap: 0.75rem; align-items: flex-start; }
-  .hamburger { display: block; }
-  .hero h1 { font-size: 1.75rem; }
-  .content-grid { grid-template-columns: 1fr; }
-  .color-picker-row { grid-template-columns: 1fr; }
-  .palette-swatches { grid-template-columns: repeat(5, 1fr); }
-  .contrast-row { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
-  .ad-header { height: auto; min-height: 90px; }
+/* ─── Reset ─────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-size:var(--text-base);
+  line-height:var(--leading-body);
+  font-weight:400;
+  font-feature-settings:"liga"1;
+  min-height:100vh;
 }
 
-@media (max-width: 480px) {
-  .palette-swatches { grid-template-columns: repeat(3, 1fr); }
-  .hero h1 { font-size: 1.5rem; }
-  .hero p { font-size: 1rem; }
-  .footer-inner { grid-template-columns: 1fr; }
+/* ─── Typography ───────────────────────────────────────────────── */
+h1,h2,h3,h4,h5,h6{font-family:var(--font-display);line-height:var(--leading-tight);color:var(--fg);margin:0}
+h1{font-size:var(--text-4xl);font-weight:600;letter-spacing:var(--tracking-display)}
+h2{font-size:var(--text-2xl);font-weight:600;letter-spacing:-0.02em;line-height:1.25}
+h3{font-size:var(--text-xl);font-weight:600;letter-spacing:-0.015em;line-height:1.33}
+h4{font-size:var(--text-base);font-weight:500}
+p{margin:0}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:none;border-radius:2px;box-shadow:var(--focus-ring)}
+
+/* ─── Layout ────────────────────────────────────────────────────── */
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
+@media(max-width:768px){.container{padding:0 var(--space-4)}}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:56px;
 }
+.header-inner{
+  max-width:var(--container-max);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--space-6);height:56px;
+}
+@media(max-width:768px){.header-inner{padding:0 var(--space-4)}}
+
+.logo{
+  display:flex;align-items:center;gap:var(--space-2);
+  color:var(--fg);font-weight:500;font-size:var(--text-base);
+  text-decoration:none;
+}
+.logo:hover{text-decoration:none;opacity:0.8}
+.logo svg{width:20px;height:20px;color:var(--accent)}
+.logo-tag{
+  font-size:var(--text-xs);color:var(--muted);font-family:var(--font-mono);
+  padding:2px 6px;border-radius:4px;background:var(--surface);
+  box-shadow:var(--elev-ring);margin-left:var(--space-1);
+}
+
+.nav-links{display:flex;gap:var(--space-6);align-items:center}
+.nav-links a{
+  color:var(--fg-2);font-size:var(--text-sm);font-weight:500;
+  text-decoration:none;transition:color var(--motion-fast) var(--ease-standard);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--fg);text-decoration:none}
+.hamburger{display:none;background:none;border:none;color:var(--fg);cursor:pointer;padding:var(--space-1)}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:var(--space-4);gap:var(--space-3);align-items:flex-start}
+  .hamburger{display:block}
+}
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+.hero{
+  padding:120px var(--space-6) 64px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:-40% -10% auto -10%;height:70%;
+  background:conic-gradient(from 220deg at 50% 50%, color-mix(in oklab,var(--accent),var(--bg) 30%) 0deg, color-mix(in oklab,var(--accent),var(--bg) 60%) 90deg, color-mix(in oklab,var(--accent),var(--bg) 85%) 180deg, var(--bg) 270deg, color-mix(in oklab,var(--accent),var(--bg) 30%) 360deg);
+  filter:blur(120px);opacity:0.12;z-index:0;pointer-events:none;
+}
+.hero>*{position:relative;z-index:1}
+.hero h1{max-width:16ch;margin:0 auto}
+.hero p.lede{
+  font-size:var(--text-lg);color:var(--fg-2);line-height:1.6;
+  max-width:56ch;margin:var(--space-5) auto 0;
+}
+.hero-actions{display:flex;gap:var(--space-3);margin-top:var(--space-8);justify-content:center;flex-wrap:wrap}
+
+/* ─── Buttons ───────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:8px 16px;border:none;border-radius:var(--radius-sm);
+  font-family:var(--font-display);font-size:var(--text-sm);font-weight:500;
+  line-height:1.43;cursor:pointer;text-decoration:none;
+  transition:background-color var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard);
+}
+.btn:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.btn-primary{background:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:color-mix(in oklab,var(--fg),black 14%)}
+.btn-secondary{background:transparent;color:var(--fg);box-shadow:0 0 0 1px var(--border)}
+.btn-secondary:hover{background:var(--surface-hover);box-shadow:0 0 0 1px color-mix(in oklab,var(--fg),transparent 70%)}
+.btn-ghost{background:transparent;color:var(--fg-2);padding-inline:var(--space-3)}
+.btn-ghost:hover{color:var(--fg);background:var(--surface-hover)}
+
+.btn-sm{padding:4px 10px;font-size:var(--text-xs);gap:var(--space-1)}
+.btn-icon{padding:6px;display:inline-flex;align-items:center;justify-content:center}
+
+/* ─── AdSense ───────────────────────────────────────────────────── */
+.ad-container{display:flex;justify-content:center;align-items:center;overflow:hidden}
+.ad-header{width:728px;max-width:100%;height:90px;margin:0 auto;padding:var(--space-2) 0}
+.ad-sidebar{width:300px;max-width:100%;height:250px}
+.ad-label{font-size:10px;color:var(--meta);text-align:center;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;font-family:var(--font-mono)}
+
+/* ─── Section ───────────────────────────────────────────────────── */
+.section{
+  padding:var(--space-12) 0;
+}
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:var(--space-6);
+}
+.section-header h2{font-size:var(--text-xl)}
+.section-header .eyebrow{
+  font-family:var(--font-mono);font-size:var(--text-xs);font-weight:500;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;
+  margin-bottom:var(--space-2);
+}
+.eyebrow{
+  font-family:var(--font-mono);font-size:var(--text-xs);font-weight:500;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────── */
+.card{
+  background:var(--surface);
+  border-radius:var(--radius-md);
+  padding:var(--space-6);
+  box-shadow:var(--elev-raised);
+  transition:box-shadow var(--motion-base) var(--ease-standard);
+}
+.card-header{
+  display:flex;align-items:center;gap:var(--space-2);
+  margin-bottom:var(--space-5);
+}
+.card-header svg{width:18px;height:18px;color:var(--accent);flex-shrink:0}
+.card-header h3{font-size:var(--text-base);font-weight:500;color:var(--fg);letter-spacing:0}
+
+/* ─── Color Picker ──────────────────────────────────────────────── */
+.picker-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--space-6);
+}
+@media(max-width:768px){.picker-grid{grid-template-columns:1fr}}
+
+.color-preview-area{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:280px;border-radius:var(--radius-md);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.06);
+  position:relative;transition:background 0.15s;
+}
+.color-preview-text{
+  background:rgba(0,0,0,0.65);backdrop-filter:blur(12px);
+  border-radius:var(--radius-sm);
+  padding:var(--space-4) var(--space-6);
+  text-align:center;
+  box-shadow:var(--elev-ring),0 4px 24px rgba(0,0,0,0.5);
+}
+.color-preview-text .hex-display{
+  font-size:var(--text-xl);font-weight:600;color:var(--fg);
+  font-family:var(--font-mono);
+}
+.color-preview-text .rgb-display,.color-preview-text .hsl-display{
+  font-size:var(--text-xs);color:var(--fg-2);margin-top:2px;
+  font-family:var(--font-mono);
+}
+
+.color-controls{display:flex;flex-direction:column;gap:var(--space-5)}
+
+.slider-group{}
+.slider-group label{
+  display:block;font-size:var(--text-xs);color:var(--muted);
+  margin-bottom:var(--space-1);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;
+}
+.slider-row{display:flex;gap:var(--space-2);align-items:center}
+.slider-label{font-size:11px;color:var(--meta);font-family:var(--font-mono);width:16px;text-align:right;font-weight:500}
+.slider-row input[type="range"]{
+  flex:1;height:4px;-webkit-appearance:none;appearance:none;
+  background:var(--border);border-radius:2px;outline:none;cursor:pointer;
+}
+.slider-row input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--accent);cursor:pointer;border:2px solid var(--bg);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.1);
+}
+.slider-value{
+  font-size:11px;color:var(--fg-2);font-family:var(--font-mono);
+  width:28px;text-align:right;
+}
+
+.input-grid{display:flex;flex-direction:column;gap:var(--space-2)}
+.input-row{
+  display:flex;gap:var(--space-2);align-items:center;
+}
+.input-row input[type="text"]{
+  flex:1;background:var(--bg);border:none;border-radius:var(--radius-sm);
+  padding:8px 12px;color:var(--fg);font-family:var(--font-mono);
+  font-size:var(--text-xs);outline:none;
+  box-shadow:0 0 0 1px var(--border);
+  transition:box-shadow var(--motion-fast) var(--ease-standard);
+}
+.input-row input[type="text"]:focus{box-shadow:var(--focus-ring)}
+.input-row input[type="color"]{
+  width:40px;height:40px;border:none;border-radius:var(--radius-sm);
+  cursor:pointer;padding:0;background:none;
+  box-shadow:0 0 0 1px var(--border);
+}
+.input-row input[type="color"]:focus{box-shadow:var(--focus-ring)}
+
+/* ─── Palette Generator ─────────────────────────────────────────── */
+.palette-controls{
+  display:flex;gap:var(--space-2);flex-wrap:wrap;
+  margin-bottom:var(--space-5);
+}
+.palette-btn{
+  display:inline-flex;align-items:center;gap:var(--space-1);
+  background:transparent;border:none;border-radius:var(--radius-sm);
+  padding:6px 12px;font-family:var(--font-display);font-size:var(--text-xs);
+  font-weight:500;cursor:pointer;transition:all var(--motion-fast) var(--ease-standard);
+  color:var(--fg-2);box-shadow:0 0 0 1px var(--border);
+}
+.palette-btn:hover{color:var(--fg);background:var(--surface-hover)}
+.palette-btn.active{color:var(--fg);background:var(--surface-hover);box-shadow:0 0 0 1px color-mix(in oklab,var(--fg),transparent 70%)}
+.palette-btn svg{width:14px;height:14px}
+
+.palette-swatches{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:var(--space-3);
+}
+@media(max-width:640px){.palette-swatches{grid-template-columns:repeat(3,1fr)}}
+
+.swatch-card{
+  border-radius:var(--radius-md);overflow:hidden;
+  cursor:pointer;transition:transform var(--motion-fast) var(--ease-standard);
+  box-shadow:0 0 0 1px var(--border);
+}
+.swatch-card:hover{transform:translateY(-2px)}
+.swatch-color{width:100%;aspect-ratio:1;display:block}
+.swatch-info{
+  padding:var(--space-2) var(--space-2);background:var(--surface);
+  border-top:1px solid var(--border-soft);text-align:center;
+}
+.swatch-info .swatch-hex{
+  font-size:11px;font-family:var(--font-mono);color:var(--fg-2);font-weight:500;
+}
+.swatch-info .swatch-name{
+  font-size:10px;color:var(--meta);margin-top:1px;
+}
+
+/* ─── Contrast Checker ──────────────────────────────────────────── */
+.contrast-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:var(--space-4);margin-bottom:var(--space-4);
+}
+@media(max-width:640px){.contrast-row{grid-template-columns:1fr}}
+
+.contrast-input{}
+.contrast-input label{
+  font-size:var(--text-xs);color:var(--muted);margin-bottom:var(--space-1);
+  display:block;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;
+}
+.contrast-input input[type="color"]{
+  width:100%;height:48px;border:none;border-radius:var(--radius-sm);
+  cursor:pointer;padding:2px;background:none;
+  box-shadow:0 0 0 1px var(--border);
+}
+
+.contrast-result{
+  display:flex;gap:var(--space-5);align-items:center;flex-wrap:wrap;
+  padding:var(--space-4);background:var(--bg);
+  border-radius:var(--radius-sm);box-shadow:0 0 0 1px var(--border-soft);
+}
+.contrast-ratio{
+  font-size:var(--text-2xl);font-weight:600;color:var(--fg);
+  font-family:var(--font-mono);letter-spacing:-0.02em;
+}
+.contrast-label{font-size:var(--text-xs);color:var(--meta);margin-bottom:2px}
+.contrast-badge{
+  display:inline-flex;align-items:center;gap:var(--space-1);
+  padding:4px 10px;border-radius:var(--radius-pill);
+  font-size:var(--text-xs);font-weight:500;
+}
+.contrast-badge svg{width:12px;height:12px}
+.contrast-badge.pass-aaa{background:rgba(34,197,94,0.15);color:var(--success)}
+.contrast-badge.pass-aa{background:rgba(34,197,94,0.12);color:var(--success)}
+.contrast-badge.fail{background:rgba(239,68,68,0.15);color:var(--danger)}
+.contrast-help{
+  margin-top:var(--space-3);font-size:var(--text-xs);
+  color:var(--muted);line-height:1.6;
+}
+.contrast-help strong{color:var(--fg-2)}
+
+/* ─── Export Actions ────────────────────────────────────────────── */
+.export-actions{
+  display:flex;gap:var(--space-2);margin-top:var(--space-4);flex-wrap:wrap;
+}
+.btn-export{
+  display:inline-flex;align-items:center;gap:var(--space-1);
+  background:transparent;border:none;border-radius:var(--radius-sm);
+  padding:6px 12px;font-family:var(--font-display);font-size:var(--text-xs);
+  font-weight:500;cursor:pointer;transition:all var(--motion-fast) var(--ease-standard);
+  color:var(--fg-2);box-shadow:0 0 0 1px var(--border);
+}
+.btn-export:hover{color:var(--fg);background:var(--surface-hover);box-shadow:0 0 0 1px color-mix(in oklab,var(--fg),transparent 70%)}
+.btn-export svg{width:14px;height:14px}
+
+/* ─── Harmony Rules ─────────────────────────────────────────────── */
+.harmony-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:var(--space-3);
+}
+.harmony-card{
+  background:var(--bg);border-radius:var(--radius-sm);
+  padding:var(--space-4);box-shadow:0 0 0 1px var(--border-soft);
+}
+.harmony-card h4{
+  font-size:var(--text-sm);font-weight:500;color:var(--fg);
+  margin-bottom:var(--space-1);
+}
+.harmony-card p{
+  font-size:var(--text-xs);color:var(--muted);line-height:1.5;
+}
+
+/* ─── Saved Palettes ────────────────────────────────────────────── */
+.saved-palettes{display:flex;flex-direction:column;gap:var(--space-2)}
+.saved-palette{
+  display:flex;align-items:center;gap:var(--space-3);
+  background:var(--bg);border-radius:var(--radius-sm);
+  padding:var(--space-3);box-shadow:0 0 0 1px var(--border-soft);
+  transition:box-shadow var(--motion-fast) var(--ease-standard);
+}
+.saved-palette:hover{box-shadow:0 0 0 1px var(--border)}
+.saved-palette-colors{display:flex;gap:2px;cursor:pointer}
+.saved-palette-colors span{width:24px;height:24px;border-radius:4px;display:block}
+.saved-palette-info{flex:1;min-width:0;cursor:pointer}
+.saved-palette-info .palette-name{font-size:var(--text-xs);color:var(--fg-2);font-weight:500}
+.saved-palette-info .palette-date{font-size:10px;color:var(--meta)}
+.saved-palette-actions{display:flex;gap:2px}
+.saved-palette-actions button{
+  background:none;border:none;cursor:pointer;color:var(--meta);
+  padding:4px;border-radius:4px;transition:all var(--motion-fast) var(--ease-standard);
+  display:flex;
+}
+.saved-palette-actions button:hover{background:var(--surface-hover);color:var(--fg)}
+.saved-palette-empty{
+  font-size:var(--text-xs);color:var(--muted);
+  text-align:center;padding:var(--space-5) 0;line-height:1.6;
+}
+
+/* ─── Tips ──────────────────────────────────────────────────────── */
+.tip-text{font-size:var(--text-xs);color:var(--fg-2);line-height:1.7}
+.tip-text strong{color:var(--fg);font-weight:500}
+.tip-item{margin-bottom:var(--space-3)}
+.tip-item:last-child{margin-bottom:0}
+
+/* ─── Sidebar ────────────────────────────────────────────────────── */
+.content-grid{display:grid;grid-template-columns:1fr 300px;gap:var(--space-8);margin-top:var(--space-8)}
+.content-main{min-width:0}
+.content-sidebar{display:flex;flex-direction:column;gap:var(--space-4)}
+@media(max-width:1024px){.content-grid{grid-template-columns:1fr}.content-sidebar{order:-1}}
+
+/* ─── Footer ────────────────────────────────────────────────────── */
+.site-footer{
+  border-top:1px solid var(--border);
+  padding:var(--space-12) 0 var(--space-8);
+  margin-top:var(--space-12);
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:var(--space-8);
+}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+
+.footer-brand p{font-size:var(--text-xs);color:var(--muted);max-width:300px;margin-top:var(--space-2);line-height:1.6}
+.footer-col h4{
+  font-size:var(--text-xs);color:var(--meta);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:var(--space-3);
+  font-weight:500;font-family:var(--font-mono);
+}
+.footer-col a{
+  display:block;font-size:var(--text-xs);color:var(--fg-2);
+  margin-bottom:var(--space-2);text-decoration:none;font-weight:400;
+}
+.footer-col a:hover{color:var(--fg);text-decoration:none}
+.footer-bottom{
+  max-width:var(--container-max);margin:var(--space-8) auto 0;
+  padding-top:var(--space-6);border-top:1px solid var(--border-soft);
+  text-align:center;font-size:var(--text-xs);color:var(--meta);
+}
+
+/* ─── Toast ──────────────────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--fg);color:var(--bg);
+  padding:10px 20px;border-radius:var(--radius-pill);
+  font-size:var(--text-xs);font-weight:500;z-index:999;
+  opacity:0;transition:opacity var(--motion-base) var(--ease-standard),transform var(--motion-base) var(--ease-standard);
+  pointer-events:none;white-space:nowrap;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ===== Header ===== -->
+<!-- ═══ Header ═══ -->
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
-      컬러 팔레트
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18 13.5 11"/><path d="M18 18 13.5 11"/></svg>
+      Palette
+      <span class="logo-tag">beta</span>
     </a>
-    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="메뉴 열기">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
     </button>
     <nav class="nav-links">
-      <a href="/" class="active">색상 선택기</a>
-      <a href="/how-to.html">사용 방법</a>
+      <a href="/" class="active">Picker</a>
+      <a href="/how-to.html">Guide</a>
       <a href="/faq.html">FAQ</a>
     </nav>
   </div>
 </header>
 
-<!-- ===== Hero Section ===== -->
+<!-- ═══ Hero ═══ -->
 <section class="hero">
-  <h1>전문가를 위한 컬러 팔레트 도구</h1>
-  <p>색상 선택, 조화 규칙 생성, 대비 검사까지 모든 색상 작업을 한곳에서 처리하세요. 디자이너와 개발자를 위해 제작되었습니다.</p>
-  <button class="hero-cta" onclick="document.querySelector('.color-picker-row').scrollIntoView({behavior:'smooth'})">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
-    색상 선택 시작하기
-  </button>
+  <h1>Color Palette<br/>Generator</h1>
+  <p class="lede">Pick, harmonize, and export color palettes with WCAG contrast checking. Built for designers and developers.</p>
+  <div class="hero-actions">
+    <button class="btn btn-primary" onclick="document.querySelector('.picker-grid').scrollIntoView({behavior:'smooth'})">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><path d="M9 18 13.5 11"/><path d="M18 18 13.5 11"/></svg>
+      Get Started
+    </button>
+    <a href="#harmony" class="btn btn-secondary">Explore Harmonies</a>
+  </div>
 </section>
 
-<!-- ===== AdSense Header ===== -->
+<!-- ═══ AdSense Header ═══ -->
 <div class="ad-container ad-header">
-  <div class="ad-label">광고</div>
+  <div class="ad-label">Ad</div>
   <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-8896961198330137" data-ad-slot="colorpaletteheader"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
-<!-- ===== Main Content ===== -->
-<div class="main-content">
-  <div class="content-grid">
-    <div class="content-main">
+<!-- ═══ Main Content ═══ -->
+<div class="container">
+<div class="content-grid">
+<div class="content-main">
 
-      <!-- ===== Color Picker Section ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
-          색상 선택기
-        </div>
-        <div class="color-picker-row">
-          <div class="color-preview-area" id="colorPreview">
-            <div class="color-preview-text">
-              <div class="hex-display" id="hexDisplay">#533afd</div>
-              <div class="rgb-display" id="rgbDisplay">RGB(83, 58, 253)</div>
-              <div class="hsl-display" id="hslDisplay">HSL(248, 98%, 61%)</div>
-            </div>
-          </div>
-          <div class="color-controls">
-            <div class="color-control-group">
-              <label>HSL</label>
-              <div style="display:flex;gap:8px;align-items:center">
-                <span style="font-size:0.75rem;color:var(--gray-400);width:14px">H</span>
-                <input type="range" id="hueSlider" min="0" max="360" value="248" oninput="updateFromHSL()">
-                <span id="hueVal" style="font-size:0.75rem;color:var(--gray-400);width:30px;text-align:right">248</span>
-              </div>
-              <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
-                <span style="font-size:0.75rem;color:var(--gray-400);width:14px">S</span>
-                <input type="range" id="satSlider" min="0" max="100" value="98" oninput="updateFromHSL()">
-                <span id="satVal" style="font-size:0.75rem;color:var(--gray-400);width:30px;text-align:right">98</span>
-              </div>
-              <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
-                <span style="font-size:0.75rem;color:var(--gray-400);width:14px">L</span>
-                <input type="range" id="ligSlider" min="0" max="100" value="61" oninput="updateFromHSL()">
-                <span id="ligVal" style="font-size:0.75rem;color:var(--gray-400);width:30px;text-align:right">61</span>
-              </div>
-            </div>
-            <div class="color-control-group">
-              <label>HEX / RGB</label>
-              <div class="color-input-row">
-                <input type="text" id="hexInput" value="#533afd" oninput="updateFromHex()" placeholder="#HEX">
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('hexInput').value, 'HEX 복사됨')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  복사
-                </button>
-              </div>
-              <div class="color-input-row" style="margin-top:6px">
-                <input type="text" id="rgbInput" value="rgb(83, 58, 253)" oninput="updateFromRGB()" placeholder="rgb(r,g,b)">
-                <button class="copy-btn" onclick="copyToClipboard(document.getElementById('rgbInput').value, 'RGB 복사됨')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  복사
-                </button>
-              </div>
-              <div class="color-input-row" style="margin-top:6px">
-                <input type="color" id="nativePicker" value="#533afd" oninput="updateFromNative()">
-                <span style="font-size:0.8rem;color:var(--gray-400)">시스템 색상 선택기</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== Palette Generator ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          팔레트 생성기
-        </div>
-        <div class="palette-controls">
-          <button class="palette-btn active" data-mode="monochromatic" onclick="generatePalette('monochromatic', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            모노크롬
-          </button>
-          <button class="palette-btn" data-mode="complementary" onclick="generatePalette('complementary', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
-            보색
-          </button>
-          <button class="palette-btn" data-mode="analogous" onclick="generatePalette('analogous', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            유사색
-          </button>
-          <button class="palette-btn" data-mode="triadic" onclick="generatePalette('triadic', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            트라이어딕
-          </button>
-          <button class="palette-btn" data-mode="tetradic" onclick="generatePalette('tetradic', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            테트라딕
-          </button>
-          <button class="palette-btn" onclick="generateRandomPalette(this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            랜덤
-          </button>
-        </div>
-        <div class="palette-swatches" id="paletteSwatches">
-          <!-- Generated by JS -->
-        </div>
-        <div class="export-actions">
-          <button class="btn-export" onclick="saveCurrentPalette()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            팔레트 저장
-          </button>
-          <button class="btn-export" onclick="exportCSS()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            CSS 변수로 내보내기
-          </button>
-          <button class="btn-export" onclick="exportJSON()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
-            JSON으로 내보내기
-          </button>
-        </div>
-      </div>
-
-      <!-- ===== Contrast Checker ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/></svg>
-          대비 검사기 (WCAG)
-        </div>
-        <div class="contrast-row">
-          <div class="contrast-color-input">
-            <label>텍스트 색상</label>
-            <input type="color" id="fgColor" value="#ffffff" oninput="checkContrast()">
-          </div>
-          <div class="contrast-color-input">
-            <label>배경 색상</label>
-            <input type="color" id="bgColor" value="#0d253d" oninput="checkContrast()">
-          </div>
-        </div>
-        <div class="contrast-result" id="contrastResult">
-          <div>
-            <div style="font-size:0.8rem;color:var(--gray-400)">대비 비율</div>
-            <div class="contrast-ratio" id="contrastRatio">12.3:1</div>
-          </div>
-          <div>
-            <span class="contrast-badge pass-aaa" id="contrastAAABadge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
-              AAA 통과
-            </span>
-          </div>
-          <div>
-            <span class="contrast-badge pass-aa" id="contrastAABadge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
-              AA 통과
-            </span>
-          </div>
-        </div>
-        <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--gray-400);line-height:1.6">
-          <strong>WCAG 기준:</strong> 일반 텍스트(18px 미만)는 AA 4.5:1, AAA 7:1 필요. 큰 텍스트(18px 이상 또는 14px 굵게)는 AA 3:1, AAA 4.5:1 필요.
-        </div>
-      </div>
-
-      <!-- ===== Harmony Rules ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
-          색상 조화 규칙
-        </div>
-        <div class="harmony-rules">
-          <div class="harmony-rule">
-            <h4>모노크롬</h4>
-            <p>하나의 색조에서 명도와 채도를 변화시킨 색상 구성. 일관되고 세련된 느낌을 줍니다.</p>
-          </div>
-          <div class="harmony-rule">
-            <h4>보색</h4>
-            <p>색상환에서 반대편에 위치한 두 색상의 조합. 강한 대비와 생동감을 제공합니다.</p>
-          </div>
-          <div class="harmony-rule">
-            <h4>유사색</h4>
-            <p>색상환에서 인접한 3~4개의 색상 조합. 부드럽고 조화로운 느낌을 줍니다.</p>
-          </div>
-          <div class="harmony-rule">
-            <h4>트라이어딕</h4>
-            <p>색상환에서 120도 간격으로 떨어진 세 색상의 조합. 균형 잡힌 생동감을 제공합니다.</p>
-          </div>
-          <div class="harmony-rule">
-            <h4>테트라딕</h4>
-            <p>두 쌍의 보색을 사용한 네 가지 색상 구성. 가장 풍부한 색상 조합을 제공합니다.</p>
-          </div>
-        </div>
-      </div>
-
+  <!-- ═══ Color Picker ═══ -->
+  <div class="card section">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><path d="M9 18 13.5 11"/><path d="M18 18 13.5 11"/></svg>
+      <h3>Color Picker</h3>
     </div>
-
-    <!-- ===== Sidebar ===== -->
-    <aside class="content-sidebar">
-
-      <!-- ===== AdSense Sidebar ===== -->
-      <div class="card" style="padding:0.75rem">
-        <div class="ad-container ad-sidebar">
-          <div class="ad-label">광고</div>
-          <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-8896961198330137" data-ad-slot="colorpalettesidebar"></ins>
-          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <div class="picker-grid">
+      <div class="color-preview-area" id="colorPreview">
+        <div class="color-preview-text">
+          <div class="hex-display" id="hexDisplay">#0070f3</div>
+          <div class="rgb-display" id="rgbDisplay">RGB(0, 112, 243)</div>
+          <div class="hsl-display" id="hslDisplay">HSL(212, 100%, 48%)</div>
         </div>
       </div>
-
-      <!-- ===== Saved Palettes ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          저장된 팔레트
+      <div class="color-controls">
+        <div class="slider-group">
+          <label>HSL Controls</label>
+          <div class="slider-row">
+            <span class="slider-label">H</span>
+            <input type="range" id="hueSlider" min="0" max="360" value="212" oninput="updateFromHSL()">
+            <span class="slider-value" id="hueVal">212</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">S</span>
+            <input type="range" id="satSlider" min="0" max="100" value="100" oninput="updateFromHSL()">
+            <span class="slider-value" id="satVal">100</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">L</span>
+            <input type="range" id="ligSlider" min="0" max="100" value="48" oninput="updateFromHSL()">
+            <span class="slider-value" id="ligVal">48</span>
+          </div>
         </div>
-        <div class="saved-palettes" id="savedPalettes">
-          <div style="font-size:0.85rem;color:var(--gray-400);text-align:center;padding:1rem 0">
-            아직 저장된 팔레트가 없습니다. 팔레트를 생성하고 저장 버튼을 클릭하세요.
+        <div class="input-grid">
+          <div class="input-row">
+            <input type="text" id="hexInput" value="#0070f3" oninput="updateFromHex()" placeholder="#HEX">
+            <button class="btn btn-sm btn-secondary" onclick="copyToClipboard(document.getElementById('hexInput').value, 'HEX copied')" title="Copy HEX">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <div class="input-row">
+            <input type="text" id="rgbInput" value="rgb(0, 112, 243)" oninput="updateFromRGB()" placeholder="rgb(r,g,b)">
+            <button class="btn btn-sm btn-secondary" onclick="copyToClipboard(document.getElementById('rgbInput').value, 'RGB copied')" title="Copy RGB">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <div class="input-row">
+            <input type="color" id="nativePicker" value="#0070f3" oninput="updateFromNative()">
+            <span style="font-size:var(--text-xs);color:var(--muted)">System color picker</span>
           </div>
         </div>
       </div>
-
-      <!-- ===== Quick Tips ===== -->
-      <div class="card">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
-          팁
-        </div>
-        <div style="font-size:0.85rem;color:var(--gray-300);line-height:1.7">
-          <p style="margin-bottom:0.75rem"><strong style="color:var(--white)">색상 선택 팁:</strong> 웹 접근성을 위해 텍스트와 배경색의 대비 비율을 항상 확인하세요.</p>
-          <p style="margin-bottom:0.75rem"><strong style="color:var(--white)">팔레트 저장:</strong> 마음에 드는 색상 조합을 찾았다면 저장 버튼을 눌러 나중에 다시 사용하세요.</p>
-          <p><strong style="color:var(--white)">CSS 변수:</strong> 내보내기 기능을 사용하여 디자인 시스템에 바로 적용 가능한 CSS 변수를 생성하세요.</p>
-        </div>
-      </div>
-
-    </aside>
+    </div>
   </div>
+
+  <!-- ═══ Palette Generator ═══ -->
+  <div class="card section">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <h3>Palette Generator</h3>
+    </div>
+    <div class="palette-controls">
+      <button class="palette-btn active" data-mode="monochromatic" onclick="generatePalette('monochromatic', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Mono
+      </button>
+      <button class="palette-btn" data-mode="complementary" onclick="generatePalette('complementary', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/></svg>
+        Complement
+      </button>
+      <button class="palette-btn" data-mode="analogous" onclick="generatePalette('analogous', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Analogous
+      </button>
+      <button class="palette-btn" data-mode="triadic" onclick="generatePalette('triadic', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Triadic
+      </button>
+      <button class="palette-btn" data-mode="tetradic" onclick="generatePalette('tetradic', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Tetradic
+      </button>
+      <button class="palette-btn" onclick="generateRandomPalette(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Random
+      </button>
+    </div>
+    <div class="palette-swatches" id="paletteSwatches"></div>
+    <div class="export-actions">
+      <button class="btn-export" onclick="saveCurrentPalette()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Save Palette
+      </button>
+      <button class="btn-export" onclick="exportCSS()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        CSS
+      </button>
+      <button class="btn-export" onclick="exportSCSS()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+        SCSS
+      </button>
+      <button class="btn-export" onclick="exportJSON()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        JSON
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ Contrast Checker ═══ -->
+  <div class="card section">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/></svg>
+      <h3>Contrast Checker (WCAG)</h3>
+    </div>
+    <div class="contrast-row">
+      <div class="contrast-input">
+        <label>Text Color</label>
+        <input type="color" id="fgColor" value="#ffffff" oninput="checkContrast()">
+      </div>
+      <div class="contrast-input">
+        <label>Background Color</label>
+        <input type="color" id="bgColor" value="#000000" oninput="checkContrast()">
+      </div>
+    </div>
+    <div class="contrast-result" id="contrastResult">
+      <div>
+        <div class="contrast-label">Contrast Ratio</div>
+        <div class="contrast-ratio" id="contrastRatio">21.0:1</div>
+      </div>
+      <div>
+        <span class="contrast-badge pass-aaa" id="contrastAAABadge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          AAA Pass
+        </span>
+      </div>
+      <div>
+        <span class="contrast-badge pass-aa" id="contrastAABadge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          AA Pass
+        </span>
+      </div>
+    </div>
+    <div class="contrast-help">
+      <strong>WCAG standards:</strong> Normal text (&lt;18px) needs AA 4.5:1, AAA 7:1. Large text (≥18px or ≥14px bold) needs AA 3:1, AAA 4.5:1.
+    </div>
+  </div>
+
+  <!-- ═══ Harmony Rules ═══ -->
+  <div class="card section" id="harmony">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+      <h3>Color Harmony Rules</h3>
+    </div>
+    <div class="harmony-grid">
+      <div class="harmony-card">
+        <h4>Monochromatic</h4>
+        <p>Variations in lightness and saturation of a single hue. Creates a cohesive, refined look.</p>
+      </div>
+      <div class="harmony-card">
+        <h4>Complementary</h4>
+        <p>Colors opposite on the color wheel. High contrast and vibrant energy.</p>
+      </div>
+      <div class="harmony-card">
+        <h4>Analogous</h4>
+        <p>Adjacent colors on the wheel (3-4 hues). Smooth, harmonious feel.</p>
+      </div>
+      <div class="harmony-card">
+        <h4>Triadic</h4>
+        <p>Three evenly spaced colors (120° apart). Balanced vibrancy.</p>
+      </div>
+      <div class="harmony-card">
+        <h4>Tetradic</h4>
+        <p>Two complementary pairs. The richest color combinations.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- ===== Footer ===== -->
+<!-- ═══ Sidebar ═══ -->
+<aside class="content-sidebar">
+
+  <!-- AdSense Sidebar -->
+  <div class="card" style="padding:var(--space-2);background:transparent;box-shadow:none">
+    <div class="ad-container ad-sidebar">
+      <div class="ad-label">Ad</div>
+      <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-8896961198330137" data-ad-slot="colorpalettesidebar"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+  </div>
+
+  <!-- Saved Palettes -->
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <h3>Saved Palettes</h3>
+    </div>
+    <div class="saved-palettes" id="savedPalettes">
+      <div class="saved-palette-empty">No saved palettes yet. Generate a palette and click Save.</div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+      <h3>Tips</h3>
+    </div>
+    <div class="tip-text">
+      <div class="tip-item"><strong>Accessibility first:</strong> Always check text-to-background contrast ratios for WCAG compliance.</div>
+      <div class="tip-item"><strong>Save your work:</strong> Found a great palette? Hit Save to keep it in your browser for later.</div>
+      <div class="tip-item"><strong>Export to code:</strong> Use CSS/SCSS/JSON exports to drop palettes directly into your design system.</div>
+    </div>
+  </div>
+
+</aside>
+</div>
+</div>
+
+<!-- ═══ Footer ═══ -->
 <footer class="site-footer">
-  <div class="footer-inner">
+  <div class="container">
+  <div class="footer-grid">
     <div class="footer-brand">
-      <a href="/" class="logo" style="font-size:1rem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
-        컬러 팔레트
+      <a href="/" class="logo" style="font-size:var(--text-sm)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18 13.5 11"/><path d="M18 18 13.5 11"/></svg>
+        Color Palette
       </a>
-      <p>디자이너와 개발자를 위한 전문 컬러 팔레트 생성 도구입니다. 웹 접근성과 색상 조화를 고려한 색상 선택을 지원합니다.</p>
+      <p>Professional color palette tool for designers and developers. Generate harmonious color schemes with WCAG accessibility checking.</p>
     </div>
     <div class="footer-col">
-      <h4>도구</h4>
-      <a href="/">색상 선택기</a>
-      <a href="/how-to.html">사용 방법</a>
+      <h4>Tools</h4>
+      <a href="/">Color Picker</a>
+      <a href="/how-to.html">Guide</a>
       <a href="/faq.html">FAQ</a>
     </div>
     <div class="footer-col">
-      <h4>정보</h4>
-      <a href="/about.html">소개</a>
-      <a href="/contact.html">문의</a>
-      <a href="/privacy.html">개인정보처리방침</a>
+      <h4>Info</h4>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
     </div>
     <div class="footer-col">
-      <h4>리소스</h4>
-      <a href="#" onclick="generateRandomPalette(document.querySelector('.palette-btn:last-child'))">랜덤 팔레트</a>
-      <a href="#" onclick="document.querySelector('#hexInput').select();document.querySelector('#hexInput').focus()">HEX 입력</a>
-      <a href="#" onclick="document.querySelector('#fgColor').focus()">대비 검사</a>
+      <h4>Quick Links</h4>
+      <a href="#" onclick="generateRandomPalette(document.querySelector('.palette-btn:last-child'));return false">Random Palette</a>
+      <a href="#" onclick="document.getElementById('hexInput').select();document.getElementById('hexInput').focus();return false">HEX Input</a>
+      <a href="#" onclick="document.getElementById('fgColor').focus();return false">Contrast Check</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    &copy; 2026 컬러 팔레트. All rights reserved.
+  <div class="footer-bottom">&copy; 2026 Color Palette. All rights reserved.</div>
   </div>
 </footer>
 
-<!-- ===== Toast ===== -->
+<!-- ═══ Toast ═══ -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== State =====
-let currentColor = { h: 248, s: 98, l: 61 };
+// ═══ State ═══
+let currentColor = { h: 212, s: 100, l: 48 };
 let currentPalette = [];
 let currentPaletteMode = 'monochromatic';
 
-// ===== HSL ↔ RGB =====
+// ═══ HSL ↔ RGB ═══
 function hslToRgb(h, s, l) {
   s /= 100; l /= 100;
   const c = (1 - Math.abs(2 * l - 1)) * s;
@@ -632,11 +821,7 @@ function hslToRgb(h, s, l) {
   else if (h < 240) { r = 0; g = x; b = c; }
   else if (h < 300) { r = x; g = 0; b = c; }
   else { r = c; g = 0; b = x; }
-  return {
-    r: Math.round((r + m) * 255),
-    g: Math.round((g + m) * 255),
-    b: Math.round((b + m) * 255)
-  };
+  return { r: Math.round((r + m) * 255), g: Math.round((g + m) * 255), b: Math.round((b + m) * 255) };
 }
 
 function rgbToHsl(r, g, b) {
@@ -657,7 +842,7 @@ function rgbToHsl(r, g, b) {
 }
 
 function rgbToHex(r, g, b) {
-  return '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('');
+  return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
 }
 
 function hexToRgb(hex) {
@@ -665,9 +850,9 @@ function hexToRgb(hex) {
   return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
 }
 
-// ===== Luminance & Contrast =====
+// ═══ Luminance & Contrast ═══
 function getLuminance(r, g, b) {
-  const [R, G, B] = [r,g,b].map(c => {
+  const [R, G, B] = [r, g, b].map(c => {
     c /= 255;
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   });
@@ -675,17 +860,15 @@ function getLuminance(r, g, b) {
 }
 
 function getContrastRatio(hex1, hex2) {
-  const c1 = hexToRgb(hex1);
-  const c2 = hexToRgb(hex2);
+  const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
   if (!c1 || !c2) return 1;
   const l1 = getLuminance(c1.r, c1.g, c1.b);
   const l2 = getLuminance(c2.r, c2.g, c2.b);
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
+  const lighter = Math.max(l1, l2), darker = Math.min(l1, l2);
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-// ===== Update UI =====
+// ═══ Update UI ═══
 function updateUI() {
   const { h, s, l } = currentColor;
   const rgb = hslToRgb(h, s, l);
@@ -724,8 +907,7 @@ function updateFromHex() {
     const hex = val.startsWith('#') ? val : '#' + val;
     const rgb = hexToRgb(hex);
     if (rgb) {
-      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-      currentColor = hsl;
+      currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b);
       updateUI();
     }
   }
@@ -737,8 +919,7 @@ function updateFromRGB() {
   if (match) {
     const r = parseInt(match[1]), g = parseInt(match[2]), b = parseInt(match[3]);
     if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255) {
-      const hsl = rgbToHsl(r, g, b);
-      currentColor = hsl;
+      currentColor = rgbToHsl(r, g, b);
       updateUI();
     }
   }
@@ -748,18 +929,14 @@ function updateFromNative() {
   const hex = document.getElementById('nativePicker').value;
   const rgb = hexToRgb(hex);
   if (rgb) {
-    const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-    currentColor = hsl;
+    currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b);
     updateUI();
   }
 }
 
-// ===== Copy to Clipboard =====
+// ═══ Copy to Clipboard ═══
 function copyToClipboard(text, message) {
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(message);
-  }).catch(() => {
-    // Fallback
+  navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => {
     const ta = document.createElement('textarea');
     ta.value = text; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
@@ -774,7 +951,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// ===== Palette Generation =====
+// ═══ Palette Generation ═══
 function generatePalette(mode, btn) {
   currentPaletteMode = mode;
   if (btn) {
@@ -782,65 +959,32 @@ function generatePalette(mode, btn) {
     btn.classList.add('active');
   }
 
-  const h = currentColor.h;
-  const s = currentColor.s;
-  const l = currentColor.l;
-
+  const h = currentColor.h, s = currentColor.s, l = currentColor.l;
   let colors = [];
 
   const colorNames = {
-    monochromatic: ['기본', '명도+20%', '명도-20%', '채도-30%', '명도+35%'],
-    complementary: ['기본', '보색', '보색 명도+15%', '기본 명도-15%', '보색 명도-10%'],
-    analogous: ['기본', '좌측 30도', '우측 30도', '좌측 15도', '우측 15도'],
-    triadic: ['기본', '120도', '240도', '120도 명도+10%', '240도 명도-10%'],
-    tetradic: ['기본', '보색', '90도', '270도', '보색 명도+15%']
+    monochromatic: ['Base', 'Light +20%', 'Dark -20%', 'Desat -30%', 'Light +35%'],
+    complementary: ['Base', 'Complement', 'Comp Light +15%', 'Base Dark -15%', 'Comp Dark -10%'],
+    analogous: ['Base', 'Left 30°', 'Right 30°', 'Left 15°', 'Right 15°'],
+    triadic: ['Base', '120°', '240°', '120° Light +10%', '240° Dark -10%'],
+    tetradic: ['Base', 'Complement', '90°', '270°', 'Comp Light +15%']
   };
 
   switch (mode) {
     case 'monochromatic':
-      colors = [
-        { h, s, l },
-        { h, s, l: Math.min(100, l + 20) },
-        { h, s, l: Math.max(0, l - 20) },
-        { h, s: Math.max(0, s - 30), l },
-        { h, s, l: Math.min(100, l + 35) }
-      ];
+      colors = [{h,s,l},{h,s,l:Math.min(100,l+20)},{h,s,l:Math.max(0,l-20)},{h,s:Math.max(0,s-30),l},{h,s,l:Math.min(100,l+35)}];
       break;
     case 'complementary':
-      colors = [
-        { h, s, l },
-        { h: (h + 180) % 360, s, l },
-        { h: (h + 180) % 360, s, l: Math.min(100, l + 15) },
-        { h, s, l: Math.max(0, l - 15) },
-        { h: (h + 180) % 360, s, l: Math.max(0, l - 10) }
-      ];
+      colors = [{h,s,l},{h:(h+180)%360,s,l},{h:(h+180)%360,s,l:Math.min(100,l+15)},{h,s,l:Math.max(0,l-15)},{h:(h+180)%360,s,l:Math.max(0,l-10)}];
       break;
     case 'analogous':
-      colors = [
-        { h, s, l },
-        { h: (h + 30) % 360, s, l },
-        { h: (h + 330) % 360, s, l },
-        { h: (h + 15) % 360, s: Math.min(100, s + 10), l: Math.min(100, l + 5) },
-        { h: (h + 345) % 360, s: Math.max(0, s - 10), l: Math.max(0, l - 5) }
-      ];
+      colors = [{h,s,l},{h:(h+30)%360,s,l},{h:(h+330)%360,s,l},{h:(h+15)%360,s:Math.min(100,s+10),l:Math.min(100,l+5)},{h:(h+345)%360,s:Math.max(0,s-10),l:Math.max(0,l-5)}];
       break;
     case 'triadic':
-      colors = [
-        { h, s, l },
-        { h: (h + 120) % 360, s, l },
-        { h: (h + 240) % 360, s, l },
-        { h: (h + 120) % 360, s, l: Math.min(100, l + 10) },
-        { h: (h + 240) % 360, s, l: Math.max(0, l - 10) }
-      ];
+      colors = [{h,s,l},{h:(h+120)%360,s,l},{h:(h+240)%360,s,l},{h:(h+120)%360,s,l:Math.min(100,l+10)},{h:(h+240)%360,s,l:Math.max(0,l-10)}];
       break;
     case 'tetradic':
-      colors = [
-        { h, s, l },
-        { h: (h + 180) % 360, s, l },
-        { h: (h + 90) % 360, s, l },
-        { h: (h + 270) % 360, s, l },
-        { h: (h + 180) % 360, s, l: Math.min(100, l + 15) }
-      ];
+      colors = [{h,s,l},{h:(h+180)%360,s,l},{h:(h+90)%360,s,l},{h:(h+270)%360,s,l},{h:(h+180)%360,s,l:Math.min(100,l+15)}];
       break;
   }
 
@@ -853,15 +997,12 @@ function renderPalette(colors, names) {
   container.innerHTML = colors.map((c, i) => {
     const rgb = hslToRgb(c.h, c.s, c.l);
     const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-    return `
-      <div class="swatch-card" onclick="copyToClipboard('${hex}', '${hex} 복사됨')" title="${hex}">
-        <div class="swatch-color" style="background:${hex}"></div>
-        <div class="swatch-info">
-          <div class="swatch-hex">${hex}</div>
-          <div class="swatch-name">${names[i] || ''}</div>
-        </div>
-      </div>
-    `;
+    return '<div class="swatch-card" onclick="copyToClipboard(\''+hex+'\', \''+hex+' copied\')" title="'+hex+'">' +
+      '<div class="swatch-color" style="background:'+hex+'"></div>' +
+      '<div class="swatch-info">' +
+      '<div class="swatch-hex">'+hex+'</div>' +
+      '<div class="swatch-name">'+(names[i]||'')+'</div>' +
+      '</div></div>';
   }).join('');
 }
 
@@ -871,13 +1012,12 @@ function generateRandomPalette(btn) {
   const l = 40 + Math.floor(Math.random() * 30);
   currentColor = { h, s, l };
   updateUI();
-
   if (btn) {
     document.querySelectorAll('.palette-btn[data-mode]').forEach(b => b.classList.remove('active'));
   }
 }
 
-// ===== Contrast Checker =====
+// ═══ Contrast Checker ═══
 function checkContrast() {
   const fg = document.getElementById('fgColor').value;
   const bg = document.getElementById('bgColor').value;
@@ -889,132 +1029,117 @@ function checkContrast() {
 
   if (ratio >= 7) {
     aaaBadge.className = 'contrast-badge pass-aaa';
-    aaaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> AAA 통과';
+    aaaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AAA Pass';
   } else {
     aaaBadge.className = 'contrast-badge fail';
-    aaaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> AAA 미달';
+    aaaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> AAA Fail';
   }
 
   if (ratio >= 4.5) {
     aaBadge.className = 'contrast-badge pass-aa';
-    aaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> AA 통과';
+    aaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AA Pass';
   } else {
     aaBadge.className = 'contrast-badge fail';
-    aaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> AA 미달';
+    aaBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> AA Fail';
   }
 }
 
-// ===== Save Palette =====
+// ═══ Save Palette ═══
 function saveCurrentPalette() {
-  if (currentPalette.length === 0) {
-    showToast('저장할 팔레트가 없습니다.');
-    return;
-  }
-
+  if (currentPalette.length === 0) { showToast('No palette to save.'); return; }
   const palettes = JSON.parse(localStorage.getItem('colorPalettes') || '[]');
-  const name = prompt('팔레트 이름을 입력하세요:', `팔레트 ${palettes.length + 1}`);
+  const name = prompt('Name your palette:', 'Palette ' + (palettes.length + 1));
   if (!name) return;
-
   const palette = {
-    id: Date.now(),
-    name,
-    date: new Date().toISOString(),
-    colors: currentPalette.map(c => {
-      const rgb = hslToRgb(c.h, c.s, c.l);
-      return rgbToHex(rgb.r, rgb.g, rgb.b);
-    }),
+    id: Date.now(), name, date: new Date().toISOString(),
+    colors: currentPalette.map(c => { const rgb = hslToRgb(c.h, c.s, c.l); return rgbToHex(rgb.r, rgb.g, rgb.b); }),
     mode: currentPaletteMode
   };
-
   palettes.push(palette);
   localStorage.setItem('colorPalettes', JSON.stringify(palettes));
   renderSavedPalettes();
-  showToast(`"${name}" 팔레트가 저장되었습니다.`);
+  showToast('"' + name + '" saved.');
 }
 
 function deletePalette(id) {
   const palettes = JSON.parse(localStorage.getItem('colorPalettes') || '[]');
-  const filtered = palettes.filter(p => p.id !== id);
-  localStorage.setItem('colorPalettes', JSON.stringify(filtered));
+  localStorage.setItem('colorPalettes', JSON.stringify(palettes.filter(p => p.id !== id)));
   renderSavedPalettes();
-  showToast('팔레트가 삭제되었습니다.');
+  showToast('Palette deleted.');
 }
 
 function loadPaletteToPicker(colors) {
   if (colors.length > 0) {
     const rgb = hexToRgb(colors[0]);
-    if (rgb) {
-      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-      currentColor = hsl;
-      updateUI();
-    }
+    if (rgb) { currentColor = rgbToHsl(rgb.r, rgb.g, rgb.b); updateUI(); }
   }
 }
 
 function renderSavedPalettes() {
   const container = document.getElementById('savedPalettes');
   const palettes = JSON.parse(localStorage.getItem('colorPalettes') || '[]');
-
   if (palettes.length === 0) {
-    container.innerHTML = '<div style="font-size:0.85rem;color:var(--gray-400);text-align:center;padding:1rem 0">아직 저장된 팔레트가 없습니다. 팔레트를 생성하고 저장 버튼을 클릭하세요.</div>';
+    container.innerHTML = '<div class="saved-palette-empty">No saved palettes yet. Generate a palette and click Save.</div>';
     return;
   }
-
-  container.innerHTML = palettes.map(p => `
-    <div class="saved-palette">
-      <div class="saved-palette-colors" onclick="loadPaletteToPicker(${JSON.stringify(p.colors)})" style="cursor:pointer">
-        ${p.colors.map(c => `<span style="background:${c}"></span>`).join('')}
-      </div>
-      <div class="saved-palette-info" onclick="loadPaletteToPicker(${JSON.stringify(p.colors)})" style="cursor:pointer">
-        <div class="palette-name">${p.name}</div>
-        <div class="palette-date">${new Date(p.date).toLocaleDateString('ko-KR')}</div>
-      </div>
-      <div class="saved-palette-actions">
-        <button onclick="loadPaletteToPicker(${JSON.stringify(p.colors)})" title="팔레트 불러오기">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-        </button>
-        <button onclick="deletePalette(${p.id})" title="삭제">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = palettes.map(p =>
+    '<div class="saved-palette">' +
+    '<div class="saved-palette-colors" onclick="loadPaletteToPicker(' + JSON.stringify(p.colors) + ')" style="cursor:pointer">' +
+    p.colors.map(c => '<span style="background:' + c + '"></span>').join('') +
+    '</div>' +
+    '<div class="saved-palette-info" onclick="loadPaletteToPicker(' + JSON.stringify(p.colors) + ')" style="cursor:pointer">' +
+    '<div class="palette-name">' + p.name + '</div>' +
+    '<div class="palette-date">' + new Date(p.date).toLocaleDateString() + '</div>' +
+    '</div>' +
+    '<div class="saved-palette-actions">' +
+    '<button onclick="loadPaletteToPicker(' + JSON.stringify(p.colors) + ')" title="Load">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>' +
+    '</button>' +
+    '<button onclick="deletePalette(' + p.id + ')" title="Delete">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+    '</button>' +
+    '</div></div>'
+  ).join('');
 }
 
-// ===== Export Functions =====
+// ═══ Export Functions ═══
 function exportCSS() {
-  if (currentPalette.length === 0) { showToast('내보낼 팔레트가 없습니다.'); return; }
+  if (currentPalette.length === 0) { showToast('No palette to export.'); return; }
   let css = ':root {\n';
   currentPalette.forEach((c, i) => {
     const rgb = hslToRgb(c.h, c.s, c.l);
-    const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-    css += `  --color-${i + 1}: ${hex};\n`;
+    css += '  --color-' + (i + 1) + ': ' + rgbToHex(rgb.r, rgb.g, rgb.b) + ';\n';
   });
   css += '}';
-  copyToClipboard(css, 'CSS 변수가 복사되었습니다.');
+  copyToClipboard(css, 'CSS copied to clipboard.');
+}
+
+function exportSCSS() {
+  if (currentPalette.length === 0) { showToast('No palette to export.'); return; }
+  let scss = '// Color Palette\n';
+  currentPalette.forEach((c, i) => {
+    const rgb = hslToRgb(c.h, c.s, c.l);
+    scss += '$color-' + (i + 1) + ': ' + rgbToHex(rgb.r, rgb.g, rgb.b) + ';\n';
+  });
+  copyToClipboard(scss, 'SCSS copied to clipboard.');
 }
 
 function exportJSON() {
-  if (currentPalette.length === 0) { showToast('내보낼 팔레트가 없습니다.'); return; }
+  if (currentPalette.length === 0) { showToast('No palette to export.'); return; }
   const json = JSON.stringify({
     palette: currentPalette.map(c => {
       const rgb = hslToRgb(c.h, c.s, c.l);
-      return {
-        hex: rgbToHex(rgb.r, rgb.g, rgb.b),
-        hsl: { h: c.h, s: c.s, l: c.l },
-        rgb: { r: rgb.r, g: rgb.g, b: rgb.b }
-      };
+      return { hex: rgbToHex(rgb.r, rgb.g, rgb.b), hsl: { h: c.h, s: c.s, l: c.l }, rgb: { r: rgb.r, g: rgb.g, b: rgb.b } };
     }),
     mode: currentPaletteMode
   }, null, 2);
-  copyToClipboard(json, 'JSON이 복사되었습니다.');
+  copyToClipboard(json, 'JSON copied to clipboard.');
 }
 
-// ===== Init =====
+// ═══ Init ═══
 updateUI();
 renderSavedPalettes();
-// Re-init AdSense (safe to call multiple times)
-try { (adsbygoogle = window.adsbygoogle || []).forEach(() => {}); } catch(e) {}
+try { (adsbygoogle = window.adsbygoogle || []).forEach(function(){}); } catch(e) {}
 </script>
 </body>
 </html>
