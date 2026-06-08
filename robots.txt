@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://color-palette.example.com/sitemap.xml

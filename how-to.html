@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사용 방법 - 컬러 팔레트 생성기 가이드</title>
+<meta name="description" content="컬러 팔레트 생성기의 모든 기능을 상세히 설명합니다. 색상 선택기, 팔레트 생성, 대비 검사, 내보내기까지 단계별 가이드를 제공합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8896961198330137" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DSGL4BJH4R"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-DSGL4BJH4R');
+</script>
+<style>
+:root { --navy: #0d253d; --indigo: #533afd; --indigo-light: #6b55fd; --white: #ffffff; --gray-50: #f8f9fc; --gray-100: #eef0f6; --gray-200: #d5d9e6; --gray-300: #b0b8cc; --gray-400: #8892a8; --gray-500: #6b7385; --gray-600: #4a5263; --gray-700: #2d3545; --gray-800: #1a2230; --red: #ef4444; --green: #22c55e; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 300; background: var(--navy); color: var(--gray-100); line-height: 1.6; min-height: 100vh; }
+h1, h2, h3, h4 { font-weight: 500; line-height: 1.3; }
+a { color: var(--indigo); text-decoration: none; }
+a:hover { color: var(--indigo-light); text-decoration: underline; }
+.site-header { background: rgba(13,37,61,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(83,58,253,0.15); position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; height: 60px; }
+.logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); font-weight: 600; font-size: 1.1rem; }
+.logo svg { width: 24px; height: 24px; color: var(--indigo); }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { color: var(--gray-300); font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--white); text-decoration: none; }
+.hamburger { display: none; background: none; border: none; color: var(--white); cursor: pointer; padding: 4px; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(83,58,253,0.15); padding: 1rem; gap: 0.75rem; align-items: flex-start; }
+  .hamburger { display: block; }
+}
+.page-hero { padding: 120px 1rem 60px; background: radial-gradient(ellipse 80% 50% at 50% 40%, rgba(83,58,253,0.1), transparent), var(--navy); text-align: center; }
+.page-hero h1 { font-size: 2.5rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
+.page-hero p { font-size: 1.125rem; color: var(--gray-300); max-width: 600px; margin: 0 auto; font-weight: 300; }
+.main-content { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+.step-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.step-number { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--indigo); color: white; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+.step-card h2 { font-size: 1.2rem; color: var(--white); margin-bottom: 0.75rem; }
+.step-card p { font-size: 0.95rem; color: var(--gray-300); margin-bottom: 0.5rem; line-height: 1.7; }
+.step-card ul { list-style: none; padding: 0; }
+.step-card ul li { font-size: 0.9rem; color: var(--gray-300); padding: 0.35rem 0; padding-left: 1.25rem; position: relative; }
+.step-card ul li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); }
+.tip-box { background: rgba(83,58,253,0.1); border: 1px solid rgba(83,58,253,0.2); border-radius: 12px; padding: 1rem; margin-top: 1rem; }
+.tip-box strong { color: var(--indigo-light); }
+.site-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 3rem 1rem 2rem; margin-top: 4rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+.footer-brand p { font-size: 0.85rem; color: var(--gray-400); max-width: 300px; margin-top: 0.5rem; }
+.footer-col h4 { font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 500; }
+.footer-col a { display: block; font-size: 0.85rem; color: var(--gray-300); margin-bottom: 0.4rem; font-weight: 300; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.8rem; color: var(--gray-400); }
+@media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } .page-hero h1 { font-size: 1.75rem; } }
+@media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
+      컬러 팔레트
+    </a>
+    <button class="hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="메뉴 열기">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+    </button>
+    <nav class="nav-links">
+      <a href="/">색상 선택기</a>
+      <a href="/how-to.html" class="active">사용 방법</a>
+      <a href="/faq.html">FAQ</a>
+    </nav>
+  </div>
+</header>
+<section class="page-hero">
+  <h1>컬러 팔레트 생성기 사용 방법</h1>
+  <p>디자이너와 개발자를 위한 완벽한 가이드입니다. 모든 기능을 단계별로 알아보세요.</p>
+</section>
+<div class="main-content">
+
+  <div class="step-card">
+    <div class="step-number">1</div>
+    <h2>색상 선택하기</h2>
+    <p>색상 선택기를 사용하여 원하는 색상을 찾으세요. 세 가지 방법으로 색상을 선택할 수 있습니다:</p>
+    <ul>
+      <li><strong>HSL 슬라이더:</strong> 색조(Hue), 채도(Saturation), 명도(Lightness) 값을 조절하여 정밀하게 색상을 선택합니다.</li>
+      <li><strong>HEX/RGB 입력:</strong> 원하는 HEX 코드(#RRGGBB) 또는 RGB 값을 직접 입력합니다.</li>
+      <li><strong>시스템 색상 선택기:</strong> 브라우저 기본 색상 선택기를 사용하여 시각적으로 색상을 선택합니다.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>팁:</strong> 각 색상 값 옆의 복사 버튼을 클릭하면 클립보드에 즉시 복사됩니다.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">2</div>
+    <h2>팔레트 생성하기</h2>
+    <p>선택한 색상을 기반으로 다양한 색상 조화 규칙에 따라 팔레트를 자동 생성합니다.</p>
+    <ul>
+      <li><strong>모노크롬:</strong> 동일한 색조의 다양한 명도와 채도 조합</li>
+      <li><strong>보색:</strong> 색상환의 반대편에 위치한 두 색상의 강렬한 대비</li>
+      <li><strong>유사색:</strong> 인접한 색상의 부드럽고 조화로운 조합</li>
+      <li><strong>트라이어딕:</strong> 세 가지 색상의 균형 잡힌 구성</li>
+      <li><strong>테트라딕:</strong> 네 가지 색상의 가장 풍부한 조합</li>
+      <li><strong>랜덤:</strong> 무작위 색상으로 창의적인 영감 얻기</li>
+    </ul>
+    <div class="tip-box">
+      <strong>팁:</strong> 팔레트의 각 색상 카드를 클릭하면 HEX 값이 클립보드에 복사됩니다.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">3</div>
+    <h2>대비 검사하기</h2>
+    <p>WCAG(웹 콘텐츠 접근성 가이드라인) 기준에 따라 텍스트 색상과 배경 색상의 대비를 검사합니다.</p>
+    <ul>
+      <li>텍스트 색상과 배경 색상을 각각 선택하세요.</li>
+      <li>대비 비율이 실시간으로 표시됩니다.</li>
+      <li>AA(4.5:1) 및 AAA(7:1) 기준 통과 여부를 확인할 수 있습니다.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>팁:</strong> 일반 텍스트는 AA(4.5:1) 이상을, 큰 텍스트는 AA(3:1) 이상을 목표로 하세요.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">4</div>
+    <h2>팔레트 저장 및 내보내기</h2>
+    <p>마음에 드는 팔레트를 저장하고 다양한 형식으로 내보낼 수 있습니다.</p>
+    <ul>
+      <li><strong>팔레트 저장:</strong> 팔레트에 이름을 지정하여 브라우저에 저장합니다. 저장된 팔레트는 사이드바에서 확인할 수 있습니다.</li>
+      <li><strong>CSS 변수:</strong> 디자인 시스템에 바로 적용 가능한 CSS 사용자 정의 속성으로 내보냅니다.</li>
+      <li><strong>JSON 내보내기:</strong> HEX, HSL, RGB 값을 포함한 구조화된 JSON 데이터로 내보냅니다.</li>
+    </ul>
+    <div class="tip-box">
+      <strong>팁:</strong> 저장된 팔레트를 클릭하면 해당 팔레트의 첫 번째 색상이 선택기로 로드됩니다.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-number">5</div>
+    <h2>실전 활용 팁</h2>
+    <ul>
+      <li>브랜드 컬러를 입력하고 다양한 조화 규칙을 적용하여 브랜드 가이드라인을 확장하세요.</li>
+      <li>대비 검사기를 사용하여 모든 색상 조합이 접근성 기준을 충족하는지 확인하세요.</li>
+      <li>CSS 변수 내보내기 기능으로 디자인 시스템에 색상을 즉시 적용하세요.</li>
+      <li>여러 팔레트를 저장하고 프로젝트별로 관리하여 색상 라이브러리를 구축하세요.</li>
+    </ul>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="font-size:1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
+        컬러 팔레트
+      </a>
+      <p>디자이너와 개발자를 위한 전문 컬러 팔레트 생성 도구입니다.</p>
+    </div>
+    <div class="footer-col"><h4>도구</h4><a href="/">색상 선택기</a><a href="/how-to.html">사용 방법</a><a href="/faq.html">FAQ</a></div>
+    <div class="footer-col"><h4>정보</h4><a href="/about.html">소개</a><a href="/contact.html">문의</a><a href="/privacy.html">개인정보처리방침</a></div>
+    <div class="footer-col"><h4>리소스</h4><a href="/">랜덤 팔레트</a><a href="/">HEX 입력</a><a href="/">대비 검사</a></div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 컬러 팔레트. All rights reserved.</div>
+</footer>
+</body>
+</html>

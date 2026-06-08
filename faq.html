@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자주 묻는 질문 - 컬러 팔레트 FAQ</title>
+<meta name="description" content="색상 이론과 컬러 팔레트 생성기에 대한 자주 묻는 질문 18선. 색상 조화, 웹 접근성, 디자인 팁 등을 확인하세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8896961198330137" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DSGL4BJH4R"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-DSGL4BJH4R');
+</script>
+<style>
+:root { --navy: #0d253d; --indigo: #533afd; --indigo-light: #6b55fd; --white: #ffffff; --gray-50: #f8f9fc; --gray-100: #eef0f6; --gray-200: #d5d9e6; --gray-300: #b0b8cc; --gray-400: #8892a8; --gray-500: #6b7385; --gray-600: #4a5263; --gray-700: #2d3545; --gray-800: #1a2230; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 300; background: var(--navy); color: var(--gray-100); line-height: 1.6; min-height: 100vh; }
+h1, h2, h3, h4 { font-weight: 500; line-height: 1.3; }
+a { color: var(--indigo); text-decoration: none; }
+a:hover { color: var(--indigo-light); text-decoration: underline; }
+.site-header { background: rgba(13,37,61,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(83,58,253,0.15); position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; height: 60px; }
+.logo { display: flex; align-items: center; gap: 0.5rem; color: var(--white); font-weight: 600; font-size: 1.1rem; }
+.logo svg { width: 24px; height: 24px; color: var(--indigo); }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { color: var(--gray-300); font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--white); text-decoration: none; }
+.hamburger { display: none; background: none; border: none; color: var(--white); cursor: pointer; padding: 4px; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(83,58,253,0.15); padding: 1rem; gap: 0.75rem; align-items: flex-start; }
+  .hamburger { display: block; }
+}
+.page-hero { padding: 120px 1rem 60px; background: radial-gradient(ellipse 80% 50% at 50% 40%, rgba(83,58,253,0.1), transparent), var(--navy); text-align: center; }
+.page-hero h1 { font-size: 2.5rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
+.page-hero p { font-size: 1.125rem; color: var(--gray-300); max-width: 600px; margin: 0 auto; font-weight: 300; }
+.main-content { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+.faq-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; margin-bottom: 0.75rem; overflow: hidden; }
+.faq-question { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1.25rem 1.5rem; background: none; border: none; color: var(--gray-100); font-size: 0.95rem; font-weight: 400; text-align: left; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.faq-question:hover { background: rgba(83,58,253,0.08); }
+.faq-question svg { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.3s; color: var(--gray-400); }
+.faq-question.open svg { transform: rotate(180deg); color: var(--indigo); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 1.5rem; }
+.faq-answer.open { max-height: 500px; padding: 0 1.5rem 1.25rem; }
+.faq-answer p { font-size: 0.9rem; color: var(--gray-300); line-height: 1.7; }
+.faq-answer ul { list-style: none; padding: 0.5rem 0 0; }
+.faq-answer ul li { font-size: 0.85rem; color: var(--gray-300); padding: 0.25rem 0; padding-left: 1rem; position: relative; }
+.faq-answer ul li::before { content: ''; position: absolute; left: 0; top: 0.65rem; width: 4px; height: 4px; border-radius: 50%; background: var(--indigo); }
+.site-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 3rem 1rem 2rem; margin-top: 4rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+.footer-brand p { font-size: 0.85rem; color: var(--gray-400); max-width: 300px; margin-top: 0.5rem; }
+.footer-col h4 { font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; font-weight: 500; }
+.footer-col a { display: block; font-size: 0.85rem; color: var(--gray-300); margin-bottom: 0.4rem; font-weight: 300; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.8rem; color: var(--gray-400); }
+@media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } .page-hero h1 { font-size: 1.75rem; } }
+@media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
+      컬러 팔레트
+    </a>
+    <button class="hamburger" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="메뉴 열기">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
+    </button>
+    <nav class="nav-links">
+      <a href="/">색상 선택기</a>
+      <a href="/how-to.html">사용 방법</a>
+      <a href="/faq.html" class="active">FAQ</a>
+    </nav>
+  </div>
+</header>
+<section class="page-hero">
+  <h1>자주 묻는 질문</h1>
+  <p>색상 이론과 컬러 팔레트 생성기에 관한 18가지 질문과 답변을 확인하세요.</p>
+</section>
+<div class="main-content">
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>컬러 팔레트 생성기는 어떤 도구인가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>컬러 팔레트 생성기는 디자이너와 개발자를 위한 웹 기반 색상 도구입니다. HSL/HEX/RGB 색상 선택기, 다섯 가지 색상 조화 규칙 기반 팔레트 생성, WCAG 대비 검사기, 팔레트 저장 및 CSS/JSON 내보내기 기능을 제공합니다. 모든 기능은 클라이언트 측에서 작동하며 서버 업로드가 필요 없습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>HSL, RGB, HEX는 무엇이 다른가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>HSL(색조, 채도, 명도)은 인간의 색상 인식에 가장 직관적인 모델입니다. RGB(빨강, 초록, 파랑)는 디스플레이 장치의 기본 색상 모델입니다. HEX는 RGB 값을 16진수로 표현한 것으로 웹 개발에서 가장 널리 사용됩니다. 이 도구에서는 세 가지 형식을 모두 지원하며 실시간으로 변환됩니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>색상 조화 규칙은 어떻게 작동하나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>색상 조화 규칙은 색상환에서 기하학적 관계를 기반으로 합니다. 선택한 기준 색상의 위치에 따라 다른 색상들의 위치를 계산합니다. 예를 들어 보색은 기준 색상에서 180도 반대편에 위치하고, 유사색은 30도 간격으로 인접한 색상을 선택합니다. 이 규칙들은 수세기 동안 예술과 디자인에서 검증된 원칙입니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>WCAG 대비 비율은 무엇인가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>WCAG(Web Content Accessibility Guidelines) 대비 비율은 텍스트와 배경색 간의 명도 차이를 수치화한 값입니다. 1:1에서 21:1 사이의 값을 가지며, 높을수록 가독성이 좋습니다. 일반 텍스트(18px 미만)는 AA 기준 4.5:1, AAA 기준 7:1 이상이 필요합니다. 큰 텍스트는 AA 3:1, AAA 4.5:1 이상이면 충분합니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>모노크롬 팔레트는 어떻게 구성되나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>모노크롬 팔레트는 하나의 색조(Hue)를 기준으로 명도(Lightness)와 채도(Saturation)만을 변화시켜 구성합니다. 이 방법은 항상 일관되고 세련된 느낌을 주며, 브랜드 디자인 시스템에서 기본으로 자주 사용됩니다. 우리 도구는 기준 색상에서 명도 ±20%, 채도 조절 등 5가지 변형을 생성합니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>보색 팔레트는 언제 사용하나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>보색 팔레트는 색상환에서 정반대에 위치한 두 색상을 사용합니다. 강한 대비와 생동감을 주므로 주목성이 필요한 요소(CTA 버튼, 강조 텍스트, 아이콘)에 효과적입니다. 단, 너무 많은 영역에 사용하면 시각적 피로를 줄 수 있으므로 주요 색상과 포인트 색상으로 구분하여 사용하는 것이 좋습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>유사색 팔레트의 장점은 무엇인가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>유사색 팔레트는 색상환에서 인접한 색상들로 구성되어 매우 부드럽고 자연스러운 조화를 만듭니다. 대비가 강하지 않아 장시간 봐도 편안하며, 배경색이나 큰 영역의 색상에 적합합니다. 자연 풍경에서 자주 발견되는 색상 구성으로, 사용자에게 친숙하고 안정적인 느낌을 줍니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>트라이어딕과 테트라딕의 차이는?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>트라이어딕은 색상환에서 120도 간격으로 떨어진 세 가지 색상을 사용하며, 균형 잡힌 생동감을 제공합니다. 테트라딕(또는 직사각형)은 두 쌍의 보색을 사용한 네 가지 색상 구성으로 가장 다양한 색상 조합을 제공합니다. 트라이어딕은 세 가지 색상으로도 풍부한 표현이 가능하고, 테트라딕은 더 복잡하지만 다양한 디자인에 활용할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>저장된 팔레트는 어디에 보관되나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>저장된 팔레트는 브라우저의 로컬 스토리지(LocalStorage)에 저장됩니다. 서버로 전송되지 않으며, 같은 브라우저에서만 접근 가능합니다. 브라우저 캐시를 삭제하면 저장된 팔레트도 함께 사라지므로 중요한 팔레트는 CSS 또는 JSON으로 내보내기하여 별도로 보관하는 것을 권장합니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>CSS 변수로 내보내면 어떻게 사용하나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>CSS 변수(사용자 정의 속성)로 내보내면 :root 선택자 아래에 --color-1, --color-2 등의 변수가 생성됩니다. 이 변수들을 CSS 파일에 추가한 후, var(--color-1) 형식으로 어디서든 사용할 수 있습니다. 예를 들어 background: var(--color-1)처럼 사용하면 디자인 시스템 전체에서 일관된 색상을 유지할 수 있고, 나중에 한 곳에서만 수정하면 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>JSON 내보내기 형식은 어떻게 구성되나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>JSON 내보내기는 각 색상의 HEX, HSL, RGB 값을 모두 포함하는 구조화된 데이터를 생성합니다. 프로그래밍 방식으로 색상 데이터를 처리해야 할 때 유용합니다. 예를 들어 디자인 토큰 시스템, Figma 플러그인, 자동화된 스타일 가이드 생성 등에 활용할 수 있습니다. 형식은 다음과 같습니다: { "palette": [{ "hex": "#...", "hsl": {...}, "rgb": {...} }], "mode": "monochromatic" }</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>색상환(Color Wheel)이란 무엇인가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>색상환은 스펙트럼의 색상을 원형으로 배열한 것입니다. 일반적으로 빨강, 주황, 노랑, 초록, 파랑, 보라 등 12가지 주요 색상이 포함됩니다. 색상환은 색상 간의 관계를 시각화하여 보색(180도 반대), 유사색(인접), 삼색(120도 간격) 등의 조화 규칙을 쉽게 이해할 수 있게 해줍니다. Johannes Itten이 현대 색상환의 기초를 확립했습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>웹 디자인에서 색상 선택 시 주의할 점은?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>웹 디자인에서 색상을 선택할 때는 다음 사항을 고려하세요: (1) WCAG 대비 비율을 확인하여 텍스트 가독성 확보, (2) 색맹 사용자를 위해 색상 외의 추가 식별자(아이콘, 텍스트) 제공, (3) 브랜드 아이덴티티와 일관성 유지, (4) 60-30-10 규칙(주요 60%, 보조 30%, 강조 10%) 적용, (5) 다양한 화면과 조명 조건에서도 색상이 적절히 보이는지 테스트.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>색맹 사용자를 위한 색상 선택 팁이 있나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>색맹(특히 적색-녹색 색맹) 사용자를 고려할 때는: (1) 빨강-초록 조합을 피하고 대신 파랑-주황 조합 사용, (2) 명도 대비를 충분히 확보하여 색상 구분이 어려워도 명도 차이로 식별 가능하게 함, (3) 색상만으로 정보를 전달하지 말고 아이콘이나 텍스트 레이블을 함께 제공, (4) ColorBrewer와 같은 색맹 친화적인 팔레트 참고. 우리 도구의 대비 검사기를 사용하면 명도 대비를 확인할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>60-30-10 규칙이란 무엇인가요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>60-30-10 규칙은 인테리어 디자인에서 시작된 색상 비율 원칙으로, 웹 디자인에도 널리 적용됩니다. 전체 디자인의 60%는 중립적인 주 색상(배경, 큰 영역), 30%는 보조 색상(헤더, 사이드바), 10%는 강조 색상(CTA 버튼, 링크, 포인트)으로 구성합니다. 이 규칙은 시각적 균형을 유지하면서도 지루하지 않은 디자인을 만드는 데 효과적입니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>따뜻한 색상과 차가운 색상의 차이는?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>따뜻한 색상(빨강, 주황, 노랑 계열)은 에너지, 열정, 친근감을 전달하며 주목성을 높입니다. 차가운 색상(파랑, 초록, 보라 계열)은 차분함, 신뢰, 전문성을 전달합니다. 웹사이트에서는 목적에 따라 적절히 선택하세요. 예를 들어 소셜 미디어나 엔터테인먼트 사이트는 따뜻한 색상이, 금융이나 의료 사이트는 차가운 색상이 효과적입니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>랜덤 팔레트 생성은 어떻게 작동하나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>랜덤 팔레트 생성은 무작위로 기준 색조를 선택하고, 적절한 채도(50-100%)와 명도(40-70%) 범위 내에서 색상을 생성합니다. 완전히 무작위가 아니라 시각적으로 보기 좋은 범위 내에서 색상을 생성하도록 설계되었습니다. 새로운 색상 조합에 대한 영감이 필요할 때 유용하며, 예상치 못한 흥미로운 조합을 발견할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      <span>브랜드 컬러 가이드라인을 어떻게 만들 수 있나요?</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="faq-answer">
+      <p>브랜드 컬러 가이드라인을 만들려면: (1) 브랜드의 핵심 색상(로고 색상)을 선택기에 입력하세요. (2) 다양한 조화 규칙을 적용하여 확장 팔레트를 생성하세요. (3) 대비 검사기로 모든 색상 조합의 접근성을 확인하세요. (4) 마음에 드는 팔레트를 저장하세요. (5) CSS 변수나 JSON으로 내보내어 디자인 시스템에 통합하세요. 이렇게 구성된 팔레트는 브랜드의 일관된 색상 정체성을 유지하는 데 도움이 됩니다.</p>
+    </div>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="font-size:1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M9 18L13.5 11"/><path d="M18 18L13.5 11"/></svg>
+        컬러 팔레트
+      </a>
+      <p>디자이너와 개발자를 위한 전문 컬러 팔레트 생성 도구입니다.</p>
+    </div>
+    <div class="footer-col"><h4>도구</h4><a href="/">색상 선택기</a><a href="/how-to.html">사용 방법</a><a href="/faq.html">FAQ</a></div>
+    <div class="footer-col"><h4>정보</h4><a href="/about.html">소개</a><a href="/contact.html">문의</a><a href="/privacy.html">개인정보처리방침</a></div>
+    <div class="footer-col"><h4>리소스</h4><a href="/">랜덤 팔레트</a><a href="/">HEX 입력</a><a href="/">대비 검사</a></div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 컬러 팔레트. All rights reserved.</div>
+</footer>
+<script>
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+</script>
+</body>
+</html>
