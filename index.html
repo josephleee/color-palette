@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -513,23 +513,27 @@ a:focus-visible{outline:none;border-radius:2px;box-shadow:var(--focus-ring)}
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
     </button>
     <nav class="nav-links">
-      <a href="/" class="active">Picker</a>
-      <a href="/how-to.html">Guide</a>
+      <a href="/" class="active" data-i18n="nav.picker">색상 선택기</a>
+      <a href="/how-to.html" data-i18n="nav.howTo">사용 방법</a>
       <a href="/faq.html">FAQ</a>
     </nav>
+    <div class="lang-switcher">
+      <button type="button" class="lang-btn active" data-lang="ko">KO</button>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
   </div>
 </header>
 
 <!-- ═══ Hero ═══ -->
 <section class="hero">
-  <h1>Color Palette<br/>Generator</h1>
-  <p class="lede">Pick, harmonize, and export color palettes with WCAG contrast checking. Built for designers and developers.</p>
+  <h1 data-i18n="hero.title">컬러 팔레트<br/>생성기</h1>
+  <p class="lede" data-i18n="hero.desc">색상 선택, 조화 규칙 생성, 대비 검사까지 모든 색상 작업을 한곳에서 처리하세요. 디자이너와 개발자를 위해 제작되었습니다.</p>
   <div class="hero-actions">
     <button class="btn btn-primary" onclick="document.querySelector('.picker-grid').scrollIntoView({behavior:'smooth'})">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><path d="M9 18 13.5 11"/><path d="M18 18 13.5 11"/></svg>
-      Get Started
+      <span data-i18n="hero.cta">시작하기</span>
     </button>
-    <a href="#harmony" class="btn btn-secondary">Explore Harmonies</a>
+    <a href="#harmony" class="btn btn-secondary" data-i18n="hero.harmonies">색상 조화 탐색</a>
   </div>
 </section>
 
@@ -540,10 +544,12 @@ a:focus-visible{outline:none;border-radius:2px;box-shadow:var(--focus-ring)}
   <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </div>
 
+
 <!-- ═══ Main Content ═══ -->
 <div class="container">
 <div class="content-grid">
 <div class="content-main">
+
 
   <!-- ═══ Color Picker ═══ -->
   <div class="card section">
@@ -804,8 +810,57 @@ a:focus-visible{outline:none;border-radius:2px;box-shadow:var(--focus-ring)}
 <div class="toast" id="toast"></div>
 
 <script>
+
+// ===== Language Support =====
+const I18N = {
+  ko: {
+    'nav.picker': '색상 선택기',
+    'nav.howTo': '사용 방법',
+    'hero.title': '전문가를 위한 컬러 팔레트 도구',
+    'hero.desc': '색상 선택, 조화 규칙 생성, 대비 검사까지 모든 색상 작업을 한곳에서 처리하세요. 디자이너와 개발자를 위해 제작되었습니다.',
+    'hero.cta': '색상 선택 시작하기',
+    'card.picker': '색상 선택기'
+  },
+  en: {
+    'nav.picker': 'Color Picker',
+    'nav.howTo': 'How to Use',
+    'hero.title': 'Professional Color Palette Tool',
+    'hero.desc': 'Handle color picking, harmony rules, and contrast checks in one place. Built for designers and developers.',
+    'hero.cta': 'Start Picking Colors',
+    'card.picker': 'Color Picker'
+  }
+};
+
+function setLanguage(lang) {
+  const dict = I18N[lang] || I18N.ko;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  localStorage.setItem('colorPaletteLang', lang);
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.content = lang === 'en'
+    ? 'Professional color palette tool for designers and developers. Generate harmonious color schemes, check contrast, and export palettes.'
+    : '디자이너와 개발자를 위한 전문 컬러 팔레트 도구. 색상 조합 생성, 대비 검사, 팔레트 내보내기를 한곳에서 처리하세요.';
+  document.title = lang === 'en'
+    ? 'Color Palette Tool - Professional Color Picker'
+    : '컬러 팔레트 도구 - 전문 색상 선택기';
+}
+
+function initLanguage() {
+  const saved = localStorage.getItem('colorPaletteLang') || localStorage.getItem('siteLanguage') || 'ko';
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
+  setLanguage(saved);
+}
+
+// ═══ State ═══
 // ═══ State ═══
 let currentColor = { h: 212, s: 100, l: 48 };
+
 let currentPalette = [];
 let currentPaletteMode = 'monochromatic';
 
@@ -1138,6 +1193,8 @@ function exportJSON() {
 }
 
 // ═══ Init ═══
+initLanguage();
+
 updateUI();
 renderSavedPalettes();
 try { (adsbygoogle = window.adsbygoogle || []).forEach(function(){}); } catch(e) {}
